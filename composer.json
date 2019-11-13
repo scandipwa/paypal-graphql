@@ -13,7 +13,7 @@
         "email": "info@scandiweb.com"
     },
     "require": {
-        "magento/magento2-base": "^2.3.3",
+        "magento/magento2-base": "^2.3.2",
         "magento/module-paypal-graph-ql": "*"
     },
     "type": "magento2-module",
