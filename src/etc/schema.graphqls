@@ -15,4 +15,5 @@ input S_PaypalExpressTokenInput @doc(description: "Defines the attributes requir
 
 extend type StoreConfig {
     paypal_sandbox_flag: Boolean @doc(description: "PayPal sandbox mode")
+    paypal_client_id: ID @doc(description: "PayPal client ID")
 }

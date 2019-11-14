@@ -13,6 +13,7 @@
         <arguments>
             <argument name="extendedConfigData">
                 <item name="paypal_sandbox_flag" xsi:type="string">paypal/wpp/sandbox_flag</item>
+                <item name="paypal_client_id" xsi:type="string">paypal/wpp/client_id</item>
             </argument>
         </arguments>
     </type>
