@@ -13,9 +13,9 @@ import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Html from 'Component/Html';
+import Loader from 'Component/Loader';
 
 import './PayPal.style';
-import Loader from 'Component/Loader';
 
 export const PAYPAL_SCRIPT = 'PAYPAL_SCRIPT';
 

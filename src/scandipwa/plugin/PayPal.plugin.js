@@ -2,7 +2,8 @@ import PayPal from '../app/component/PayPal';
 
 export const PAYPAL_EXPRESS_CREDIT = 'paypal_express_bml';
 export const PAYPAL_EXPRESS = 'paypal_express';
-export class PayPalPlugin {
+
+export class PayPalPlugin extends ExtensibleClass {
     renderPayPal() {
         const {
             selectedPaymentCode,
@@ -18,7 +19,7 @@ export class PayPalPlugin {
             />
         );
     }
-    
+
     /**
      * Args are available for functions which are class members
      * Plugin member that references plugin's other members should be bound to it by using arrow functions
@@ -26,7 +27,7 @@ export class PayPalPlugin {
      * @param {Function} callback
      * @param {Object} instance
      */
-    aroundRenderContent = (args, callback, instance) => {        
+    aroundRenderContent = (args, callback, instance) => {
         return (
             <div>
                 { callback(args) }
@@ -37,8 +38,8 @@ export class PayPalPlugin {
 
     /**
      * Args are not available for class properties which are not functions
-     * @param {Object} originalMember 
-     * @param {Object} instance 
+     * @param {Object} originalMember
+     * @param {Object} instance
      */
     paymentRenderMap(originalMember, instance) {
         return {
@@ -56,7 +57,7 @@ export class PayPalPlugin {
         const [prevProps] = args;
         const { selectedPaymentCode, setOrderButtonVisibility } = instance.props;
         const { selectedPaymentCode: prevSelectedPaymentCode } = prevProps;
-        
+
         if (selectedPaymentCode !== prevSelectedPaymentCode) {
             if (selectedPaymentCode === PAYPAL_EXPRESS) {
                 setOrderButtonVisibility(false);
@@ -83,7 +84,12 @@ export class PayPalPlugin {
     }
 }
 
-const plugin = new PayPalPlugin();
+const {
+    aroundRenderContent,
+    componentDidUpdate,
+    paymentRenderMap,
+    controlOrderButton
+} = new (middleware(PayPalPlugin, 'Plugin/ScandiPWA/Paypal'))();
 
 const config = {
     'Component/CheckoutPayments/Component': {
@@ -94,13 +100,13 @@ const config = {
                 'renderContent': [
                     {
                         position: 100,
-                        implementation: plugin.aroundRenderContent
+                        implementation: aroundRenderContent
                     }
                 ],
                 'componentDidUpdate': [
                     {
                         position: 100,
-                        implementation: plugin.componentDidUpdate
+                        implementation: componentDidUpdate
                     }
                 ]
             }
@@ -110,7 +116,7 @@ const config = {
                 'paymentRenderMap': [
                     {
                         position: 100,
-                        implementation: plugin.paymentRenderMap
+                        implementation: paymentRenderMap
                     }
                 ]
             }
@@ -122,7 +128,7 @@ const config = {
                 'selectPaymentMethod': [
                     {
                         position: 100,
-                        implementation: plugin.controlOrderButton
+                        implementation: controlOrderButton
                     }
                 ]
             }
