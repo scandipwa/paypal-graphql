@@ -24,7 +24,7 @@ export const PAYPAL_SCRIPT = 'PAYPAL_SCRIPT';
  * This component currently can be rendered only once
  * Please try to have no more than 1 component per page and use isDisabled to hide it.
 */
-export default class PayPal extends PureComponent {
+export class PayPal extends ExtensiblePureComponent {
     static propTypes = {
         isDisabled: PropTypes.bool,
         paypal: PropTypes.any.isRequired,
@@ -105,3 +105,5 @@ export default class PayPal extends PureComponent {
         );
     }
 }
+
+export default middleware(PayPal, 'Scandipwa/PayPalGraphQl/Component/PayPal/Component');

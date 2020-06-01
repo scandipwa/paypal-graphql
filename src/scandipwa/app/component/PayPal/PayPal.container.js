@@ -19,7 +19,7 @@ import { fetchMutation } from 'Util/Request';
 import { CheckoutQuery } from 'Query';
 import { showNotification } from 'Store/Notification';
 
-import { PAYPAL_EXPRESS } from '../../../plugin/PayPal.plugin';
+import { PAYPAL_EXPRESS } from '../../plugin/CheckoutPayments.plugin';
 
 import PayPalQuery from '../../query/PayPal.query';
 import PayPal from './PayPal.component';
@@ -36,7 +36,7 @@ export const mapDispatchToProps = dispatch => ({
     showNotification: (type, message, e) => dispatch(showNotification(type, message, e))
 });
 
-export class PayPalContainer extends PureComponent {
+export class PayPalContainer extends ExtensiblePureComponent {
     static propTypes = {
         clientId: PropTypes.string,
         isSandboxEnabled: PropTypes.bool,
@@ -157,4 +157,9 @@ export class PayPalContainer extends PureComponent {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayPalContainer);
+export default connect(
+    middleware(mapStateToProps, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapStateToProps'),
+    middleware(mapDispatchToProps, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapDispatchToProps')
+)(
+    middleware(PayPalContainer, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container')
+);
