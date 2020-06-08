@@ -20,15 +20,13 @@ const {
 
 const config = {
     'Component/CheckoutPayments/Container': {
-        'instance': {
-            'get': {
-                'selectPaymentMethod': [
-                    {
-                        position: 100,
-                        implementation: aroundSelectPaymentMethod
-                    }
-                ]
-            }
+        'member-function': {
+            'selectPaymentMethod': [
+                {
+                    position: 100,
+                    implementation: aroundSelectPaymentMethod
+                }
+            ]
         }
     }
 };
