@@ -21,12 +21,7 @@ const {
 const config = {
     'Component/CheckoutPayments/Container': {
         'member-function': {
-            'selectPaymentMethod': [
-                {
-                    position: 100,
-                    implementation: aroundSelectPaymentMethod
-                }
-            ]
+            'selectPaymentMethod': aroundSelectPaymentMethod
         }
     }
 };

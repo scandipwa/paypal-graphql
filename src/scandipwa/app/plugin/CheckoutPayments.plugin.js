@@ -64,26 +64,11 @@ const {
 const config = {
     'Component/CheckoutPayments/Component': {
         'member-function': {
-            'renderContent': [
-                {
-                    position: 100,
-                    implementation: aroundRenderContent
-                }
-            ],
-            'componentDidUpdate': [
-                {
-                    position: 100,
-                    implementation: aroundComponentDidUpdate
-                }
-            ]
+            'renderContent': aroundRenderContent,
+            'componentDidUpdate': aroundComponentDidUpdate
         },
         'member-property': {
-            'paymentRenderMap': [
-                {
-                    position: 100,
-                    implementation: aroundPaymentRenderMap
-                }
-            ]
+            'paymentRenderMap': aroundPaymentRenderMap
         }
     }
 };
