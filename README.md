@@ -1,4 +1,4 @@
-### PayPal extension for ScandiPWA
+# PayPal extension for ScandiPWA
 
 > **Note 1:** PayPal credit payment method is not yet supported.
 
