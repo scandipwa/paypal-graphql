@@ -9,15 +9,14 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { isSignedIn } from 'Util/Auth';
-import { CartDispatcher } from 'Store/Cart';
+import { CartDispatcher } from 'Store/Cart/Cart.dispatcher';
 import { fetchMutation } from 'Util/Request';
-import { CheckoutQuery } from 'Query';
-import { showNotification } from 'Store/Notification';
+import CheckoutQuery from 'Query/Checkout.query';
+import { showNotification } from 'Store/Notification/Notification.action';
 
 import { PAYPAL_EXPRESS } from '../../plugin/CheckoutPayments.plugin';
 
@@ -26,17 +25,20 @@ import PayPal from './PayPal.component';
 
 export const PAYPAL_SCRIPT = 'PAYPAL_SCRIPT';
 
+/** @namespace Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapStateToProps */
 export const mapStateToProps = state => ({
     cartTotals: state.CartReducer.cartTotals,
     clientId: state.ConfigReducer.paypal_client_id,
     isSandboxEnabled: state.ConfigReducer.paypal_sandbox_flag
 });
 
+/** @namespace Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapDispatchToProps */
 export const mapDispatchToProps = dispatch => ({
     showNotification: (type, message, e) => dispatch(showNotification(type, message, e))
 });
 
-export class PayPalContainer extends ExtensiblePureComponent {
+/** @namespace Scandipwa/PayPalGraphQl/Component/PayPal/Container */
+export class PayPalContainer extends PureComponent {
     static propTypes = {
         clientId: PropTypes.string,
         isSandboxEnabled: PropTypes.bool,
@@ -157,9 +159,4 @@ export class PayPalContainer extends ExtensiblePureComponent {
     }
 }
 
-export default connect(
-    middleware(mapStateToProps, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapStateToProps'),
-    middleware(mapDispatchToProps, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapDispatchToProps')
-)(
-    middleware(PayPalContainer, 'Scandipwa/PayPalGraphQl/Component/PayPal/Container')
-);
+export default connect(mapStateToProps, mapDispatchToProps)(PayPalContainer);

@@ -11,6 +11,7 @@
 
 import { Field } from 'Util/Query';
 
+/** @namespace Scandipwa/PayPalGraphQl/Query/PayPal */
 export class PayPalQuery {
     getCreatePaypalExpressTokenMutation(input) {
         return new Field('s_createPaypalExpressToken')
