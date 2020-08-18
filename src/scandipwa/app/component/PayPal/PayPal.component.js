@@ -9,14 +9,16 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import Html from 'Component/Html';
-import Loader from 'Component/Loader';
-
 import './PayPal.style';
 
-export const PAYPAL_SCRIPT = 'PAYPAL_SCRIPT';
+import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+
+import Html from 'Component/Html';
+import Loader from 'Component/Loader';
+import { TotalsType } from 'Type/MiniCart';
+
+import { PAYPAL_SCRIPT } from './PayPal.config';
 
 /**
  * *Note*
@@ -29,7 +31,7 @@ export class PayPal extends PureComponent {
         isDisabled: PropTypes.bool,
         paypal: PropTypes.any.isRequired,
         clientId: PropTypes.string.isRequired,
-        cartTotals: PropTypes.shape({}).isRequired,
+        cartTotals: TotalsType.isRequired,
         onError: PropTypes.func.isRequired,
         onCancel: PropTypes.func.isRequired,
         onApprove: PropTypes.func.isRequired,

@@ -1,9 +1,9 @@
-import { PAYPAL_EXPRESS_CREDIT } from './CheckoutPayments.plugin'
+import { PAYPAL_EXPRESS_CREDIT } from '../component/PayPal/PayPal.config';
 
-class CheckoutPaymentsContainerPlugin {
+export class CheckoutPaymentsContainerPlugin {
     aroundSelectPaymentMethod = (args, callback, instance) => {
         const { setOrderButtonEnableStatus } = instance.props;
-        const [ something ] = args;
+        const [something] = args;
         const { code } = something;
 
         callback.apply(instance, args);
@@ -11,17 +11,17 @@ class CheckoutPaymentsContainerPlugin {
         if (code === PAYPAL_EXPRESS_CREDIT) {
             setOrderButtonEnableStatus(false);
         }
-    }
+    };
 }
 
 const {
     aroundSelectPaymentMethod
 } = new CheckoutPaymentsContainerPlugin();
 
-const config = {
+export const config = {
     'Component/CheckoutPayments/Container': {
         'member-function': {
-            'selectPaymentMethod': aroundSelectPaymentMethod
+            selectPaymentMethod: aroundSelectPaymentMethod
         }
     }
 };

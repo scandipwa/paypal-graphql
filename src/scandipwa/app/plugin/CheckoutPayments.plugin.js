@@ -1,9 +1,7 @@
 import PayPal from '../component/PayPal';
+import { PAYPAL_EXPRESS, PAYPAL_EXPRESS_CREDIT } from '../component/PayPal/PayPal.config';
 
-export const PAYPAL_EXPRESS_CREDIT = 'paypal_express_bml';
-export const PAYPAL_EXPRESS = 'paypal_express';
-
-class CheckoutPaymentsPlugin {
+export class CheckoutPaymentsPlugin {
     renderPayPal() {
         const {
             selectedPaymentCode,
@@ -20,24 +18,20 @@ class CheckoutPaymentsPlugin {
         );
     }
 
-    aroundPaymentRenderMap = (originalMember, instance) => {
-        return {
-            ...originalMember,
-            [PAYPAL_EXPRESS_CREDIT]: instance.renderNotSupported.bind(instance)
-        }
-    }
+    aroundPaymentRenderMap = (originalMember, instance) => ({
+        ...originalMember,
+        [PAYPAL_EXPRESS_CREDIT]: instance.renderNotSupported.bind(instance)
+    });
 
-    aroundRenderContent = (args, callback, instance) => {
-        return (
+    aroundRenderContent = (args, callback, instance) => (
             <div>
                 { callback.apply(instance, args) }
                 { this.renderPayPal.apply(instance) }
             </div>
-        )
-    }
+    );
 
     aroundComponentDidUpdate = (args, callback = () => {}, instance) => {
-        const [ prevProps ] = args;
+        const [prevProps] = args;
         const { selectedPaymentCode, setOrderButtonVisibility } = instance.props;
         const { selectedPaymentCode: prevSelectedPaymentCode } = prevProps;
 
@@ -52,7 +46,7 @@ class CheckoutPaymentsPlugin {
         }
 
         callback.apply(instance, args);
-    }
+    };
 }
 
 const {
@@ -61,14 +55,14 @@ const {
     aroundComponentDidUpdate
 } = new CheckoutPaymentsPlugin();
 
-const config = {
+export const config = {
     'Component/CheckoutPayments/Component': {
         'member-function': {
-            'renderContent': aroundRenderContent,
-            'componentDidUpdate': aroundComponentDidUpdate
+            renderContent: aroundRenderContent,
+            componentDidUpdate: aroundComponentDidUpdate
         },
         'member-property': {
-            'paymentRenderMap': aroundPaymentRenderMap
+            paymentRenderMap: aroundPaymentRenderMap
         }
     }
 };

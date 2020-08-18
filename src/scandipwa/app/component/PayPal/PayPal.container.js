@@ -9,21 +9,19 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { isSignedIn } from 'Util/Auth';
-import { CartDispatcher } from 'Store/Cart/Cart.dispatcher';
-import { fetchMutation } from 'Util/Request';
 import CheckoutQuery from 'Query/Checkout.query';
+import CartDispatcher from 'Store/Cart/Cart.dispatcher';
 import { showNotification } from 'Store/Notification/Notification.action';
-
-import { PAYPAL_EXPRESS } from '../../plugin/CheckoutPayments.plugin';
+import { isSignedIn } from 'Util/Auth';
+import { fetchMutation } from 'Util/Request';
 
 import PayPalQuery from '../../query/PayPal.query';
 import PayPal from './PayPal.component';
+import { PAYPAL_EXPRESS, PAYPAL_SCRIPT } from './PayPal.config';
 
-export const PAYPAL_SCRIPT = 'PAYPAL_SCRIPT';
 
 /** @namespace Scandipwa/PayPalGraphQl/Component/PayPal/Container/mapStateToProps */
 export const mapStateToProps = state => ({
