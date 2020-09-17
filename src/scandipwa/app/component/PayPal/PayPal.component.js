@@ -49,11 +49,11 @@ export class PayPal extends PureComponent {
     getPayPalScript = () => {
         const {
             clientId,
-            cartTotals: { quote_currency_code: currency }
+            cartTotals: { base_currency_code }
         } = this.props;
 
         const params = {
-            currency,
+            currency: base_currency_code,
             intent: 'authorize',
             'client-id': clientId
         };
