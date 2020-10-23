@@ -24,10 +24,10 @@ export class CheckoutPaymentsPlugin {
     });
 
     aroundRenderContent = (args, callback, instance) => (
-            <div>
-                { callback.apply(instance, args) }
-                { this.renderPayPal.apply(instance) }
-            </div>
+        <div>
+            { callback.apply(instance, args) }
+            { this.renderPayPal.apply(instance) }
+        </div>
     );
 
     aroundComponentDidUpdate = (args, callback = () => {}, instance) => {
@@ -47,19 +47,31 @@ export class CheckoutPaymentsPlugin {
 
         callback.apply(instance, args);
     };
+
+    aroundComponentDidMount = (args, callback, instance) => {
+        const { selectedPaymentCode, setOrderButtonVisibility } = instance.props;
+
+        callback(...args);
+
+        if (selectedPaymentCode === PAYPAL_EXPRESS) {
+            setOrderButtonVisibility(false);
+        }
+    }
 }
 
 const {
     aroundPaymentRenderMap,
     aroundRenderContent,
-    aroundComponentDidUpdate
+    aroundComponentDidUpdate,
+    aroundComponentDidMount
 } = new CheckoutPaymentsPlugin();
 
 export const config = {
     'Component/CheckoutPayments/Component': {
         'member-function': {
             renderContent: aroundRenderContent,
-            componentDidUpdate: aroundComponentDidUpdate
+            componentDidUpdate: aroundComponentDidUpdate,
+            componentDidMount: aroundComponentDidMount
         },
         'member-property': {
             paymentRenderMap: aroundPaymentRenderMap

@@ -46,16 +46,29 @@ export class PayPal extends PureComponent {
         isDisabled: false
     };
 
-    getPayPalScript = () => {
+    getClientId = () => {
         const {
             clientId,
-            cartTotals: { base_currency_code }
+            environment
+        } = this.props;
+
+        if (environment === 'sandbox') {
+            return 'sb';
+        }
+
+        return clientId;
+    }
+
+    getPayPalScript = () => {
+        const {
+            cartTotals: { base_currency_code },
         } = this.props;
 
         const params = {
             currency: base_currency_code,
+            // TODO implement action fetch from BE
             intent: 'authorize',
-            'client-id': clientId
+            'client-id': this.getClientId()
         };
 
         const paramsString = (Object.entries(params).map(([key, value]) => `${key}=${value}`)).join('&');
