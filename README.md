@@ -1,5 +1,7 @@
 # PayPal extension for ScandiPWA
 
+**Heads up!** This extension installation will only make you halfway to success. Supplementing it with a [PayPal extension front-end](https://github.com/scandipwa/paypal-fe) is a **must**
+
 > **Note 1:** PayPal credit payment method is not yet supported.
 
 > **Note 2:** You are required to enter one additional field `API Client ID` in PayPal configuration. Obtainable in account configuration.
